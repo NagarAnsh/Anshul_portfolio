@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anshul's Portfolio</title>
+
+    <style>
+      html, body { height: 100%; }
+      body { margin: 0; background: #0b0b0f; }
+
+      .hc-bg, .hc-glow {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .hc-bg {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTA0IiB2aWV3Qm94PSIwIDAgMTIwIDEwNCI+CiAgPGRlZnM+CiAgICA8cGF0dGVybiBpZD0iaGV4IiB3aWR0aD0iNjAiIGhlaWdodD0iMTA0IiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBwYXR0ZXJuVHJhbnNmb3JtPSJzY2FsZSgxKSI+CiAgICAgIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q1Y2M4MyIgc3Ryb2tlLXdpZHRoPSIxIj4KICAgICAgICA8cGF0aCBkPSJNMzAgMiBsMjYgMTUgdjMwIGwtMjYgMTUgbC0yNiAtMTUgdi0zMCBaIiAvPgogICAgICAgIDxwYXRoIGQ9Ik0zMCA1NCBsMjYgMTUgdjMwIGwtMjYgMTUgbC0yNiAtMTUgdi0zMCBaIiAvPgogICAgICA8L2c+CiAgICA8L3BhdHRlcm4+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjaGV4KSIgLz4KPC9zdmc+");
+        background-size: 120px 104px;
+        background-position: center;
+        opacity: 0.22;
+      }
+      .hc-glow {
+        background: radial-gradient(circle at 50% 35%, rgba(255,200,120,.09) 0%, rgba(0,0,0,.8) 70%);
+      }
+      #root { position: relative; z-index: 1; min-height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div class="hc-bg"></div>
+    <div class="hc-glow"></div>
+
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
