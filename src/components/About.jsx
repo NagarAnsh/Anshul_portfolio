@@ -5,17 +5,17 @@ const About = () => {
   const [activeTab, setActiveTab] = useState('story')
 
   const timeline = [
-    { year: '2021', title: 'Started EV Journey', description: 'Began learning about electric vehicle technology and sustainable energy solutions.', icon: '🌱' },
-    { year: '2022', title: 'First EV Project', description: 'Built my first battery management system using Arduino and Python.', icon: '🔋' },
-    { year: '2023', title: 'Advanced Studies', description: 'Specialized in power electronics and energy storage systems.', icon: '⚡' },
-    { year: '2024', title: 'Professional Work', description: 'Working on cutting-edge EV charging infrastructure and grid integration.', icon: '🚀' }
+    { year: '2016-2021', title: 'IISER Mohali', description: 'Focused on Quantum Computational Chemistry, exploring material behavior at a fundamental level.', icon: '🧪' },
+    { year: '2021-2022', title: 'IIT Delhi', description: 'Conducted quantum simulations of internal battery chemistry and charge transport.', icon: '⚛️' },
+    { year: '2022-2024', title: 'Hyundai Project (CNU, Daejeon)', description: 'Developed Equivalent Circuit Models (ECM) for LFP batteries and algorithms for state estimation.', icon: '🚘' },
+    { year: '2024-Present', title: 'Current Research (CNU, Daejeon)', description: 'Working on Physics-Informed Neural Networks (PINN) for battery capacity degradation.', icon: '🧠' }
   ]
 
   const achievements = [
-    { icon: Award,  title: 'Certified EV Technician', desc: 'Advanced certification in electric vehicle systems' },
-    { icon: Battery, title: 'Battery Expert',         desc: 'Specialized in lithium-ion battery management' },
-    { icon: Zap,     title: 'Power Systems',          desc: 'Expert in high-voltage power electronics' },
-    { icon: Car,     title: 'Vehicle Integration',    desc: 'Experience with vehicle control systems' }
+    { icon: Award, title: 'Certified EV Technician', desc: 'Advanced certification in electric vehicle systems' },
+    { icon: Battery, title: 'Battery Expert', desc: 'Specialized in lithium-ion battery management' },
+    { icon: Zap, title: 'Power Systems', desc: 'Expert in high-voltage power electronics' },
+    { icon: Car, title: 'Vehicle Integration', desc: 'Experience with vehicle control systems' }
   ]
 
   return (
@@ -42,57 +42,56 @@ const About = () => {
             {/* Kept as TRANSLUCENT panel */}
             <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-cyan-400/50 shadow-lg">
               <img
-                src="/assets/myphoto.jpg"
+                src="/assets/myphoto.png"
                 alt="Profile"
                 className="object-cover w-full h-full"
               />
             </div>
 
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold text-white mb-2">Anshul Kumar</h3>
-                <p className="text-cyan-400 font-semibold mb-4">EV & Energy Storage Specialist</p>
+              <h3 className="text-2xl font-bold text-white mb-2">Anshul Nagar</h3>
+              <p className="text-cyan-400 font-semibold mb-4">Lithium ion batteries,PhD Scholar, CNU</p>
 
-                <div className="space-y-2 text-gray-300">
-                  <div className="flex items-center justify-center space-x-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>Your City, Country</span>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>Available for opportunities</span>
-                  </div>
+              <div className="space-y-2 text-gray-300">
+                <div className="flex items-center justify-center space-x-2">
+                  <MapPin className="h-4 w-4" />
+                  <span>Daejeon, South Korea</span>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center bg-black/30 rounded-lg p-3">
-                  <div className="text-2xl font-bold text-cyan-400">3+</div>
-                  <div className="text-xs text-gray-400">Years Experience</div>
-                </div>
-                <div className="text-center bg-black/30 rounded-lg p-3">
-                  <div className="text-2xl font-bold text-green-400">25+</div>
-                  <div className="text-xs text-gray-400">Projects Done</div>
+                <div className="flex items-center justify-center space-x-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>Available for opportunities</span>
                 </div>
               </div>
             </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center bg-black/30 rounded-lg p-3">
+                <div className="text-2xl font-bold text-cyan-400">3+</div>
+                <div className="text-xs text-gray-400">Years Experience</div>
+              </div>
+              <div className="text-center bg-black/30 rounded-lg p-3">
+                <div className="text-2xl font-bold text-green-400">12+</div>
+                <div className="text-xs text-gray-400">Projects Done</div>
+              </div>
+            </div>
+          </div>
 
           {/* Right Column - Content */}
           <div className="lg:col-span-2">
             {/* Tab Navigation */}
             <div className="flex space-x-4 mb-8">
               {[
-                { id: 'story',       label: 'My Story',      icon: '📖' },
-                { id: 'timeline',    label: 'Timeline',      icon: '⏰' },
-                { id: 'achievements',label: 'Achievements',  icon: '🏆' }
+                { id: 'story', label: 'My Story', icon: '📖' },
+                { id: 'timeline', label: 'Timeline', icon: '⏰' },
+                { id: 'achievements', label: 'Achievements', icon: '🏆' }
               ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
-                    activeTab === tab.id
-                      ? 'bg-cyan-500 text-black'
-                      : 'bg-black/40 text-gray-300 hover:bg-black/60 hover:text-cyan-400'
-                  }`}
+                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${activeTab === tab.id
+                    ? 'bg-cyan-500 text-black'
+                    : 'bg-black/40 text-gray-300 hover:bg-black/60 hover:text-cyan-400'
+                    }`}
                 >
                   <span>{tab.icon}</span>
                   <span>{tab.label}</span>
@@ -104,28 +103,22 @@ const About = () => {
             <div className="bg-black/50 backdrop-blur-sm border border-gray-700/60 rounded-2xl p-8">
               {activeTab === 'story' && (
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-bold text-white mb-4">My Journey into EV Technology</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    My passion for electric vehicles and sustainable energy began during my engineering studies.
-                    I was fascinated by the potential of battery technology to revolutionize transportation
-                    and create a cleaner future for our planet.
+                  <h3 className="text-2xl font-bold text-white mb-4">My Journey into Battery Technology</h3>
+                  <p className="text-gray-300 leading-relaxed mb-4">
+                    My journey into the battery field didn’t start there directly—it started with curiosity.
+                  </p>
+                  <p className="text-gray-300 leading-relaxed mb-4">
+                    During my bachelor’s studies, I was working in renewable energy, mainly on solar panels and energy systems. At the same time, I was exploring quantum chemistry, trying to understand how materials behave at a fundamental level. I enjoyed the work, but something felt incomplete. I could see the systems from the outside, yet I wanted to understand what was really happening inside.
+                  </p>
+                  <p className="text-gray-300 leading-relaxed mb-4">
+                    That turning point came when I got the opportunity to work at IIT Delhi with Professor Akhil. There, I worked on quantum simulations of the internal chemistry of batteries. For the first time, I was not just using batteries,I was looking deep into their internal reactions, charge transport, and chemical behavior. It was challenging, abstract, and sometimes frustrating, but that challenge hooked me.
+                  </p>
+                  <p className="text-gray-300 leading-relaxed mb-4">
+                    That experience changed everything. My curiosity turned into a clear direction.
                   </p>
                   <p className="text-gray-300 leading-relaxed">
-                    What started as curiosity about how Tesla's battery packs work evolved into deep expertise
-                    in battery management systems, charging infrastructure, and power electronics. I've worked
-                    on projects ranging from small IoT devices to large-scale energy storage systems.
+                    Since then, I have been working continuously in the battery domain, expanding my understanding from internal electrochemistry to electrical components and system-level behavior. Today, my focus is on building neural-network-driven state estimation models, where physics-based understanding meets data-driven intelligence.
                   </p>
-                  <p className="text-gray-300 leading-relaxed">
-                    Today, I combine my software development skills with EV domain knowledge to build
-                    intelligent systems that optimize battery performance, predict maintenance needs,
-                    and integrate renewable energy sources with vehicle charging networks.
-                  </p>
-                  <div className="bg-black/30 border border-cyan-400/30 rounded-lg p-4 mt-6">
-                    <p className="text-cyan-400 italic">
-                      "Every line of code I write and every system I design brings us one step closer
-                      to a sustainable, electrified future."
-                    </p>
-                  </div>
                 </div>
               )}
 
@@ -192,7 +185,7 @@ const About = () => {
         </div>
 
       </div>
-    </section>
+    </section >
   )
 }
 
