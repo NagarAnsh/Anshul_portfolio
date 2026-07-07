@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, Zap, Battery } from 'lucide-react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const navItems = [
     { name: 'Home', to: '/' },             // React Router route
@@ -13,15 +15,24 @@ const Navbar = () => {
     { name: 'Gallery', to: '/gallery' },   // Separate page route
   ]
 
-  // Smooth scroll handler for in-page anchors
+  const scrollToSection = (to) => {
+    const section = document.querySelector(to)
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 60,
+        behavior: 'smooth',
+      })
+    }
+  }
+
+  // Smooth scroll handler for in-page anchors — works from any route
   const handleNavClick = (to) => {
     if (to.startsWith('#')) {
-      const section = document.querySelector(to)
-      if (section) {
-        window.scrollTo({
-          top: section.offsetTop - 60,
-          behavior: 'smooth',
-        })
+      if (location.pathname !== '/') {
+        navigate('/')
+        setTimeout(() => scrollToSection(to), 100)
+      } else {
+        scrollToSection(to)
       }
     }
     setIsOpen(false)
@@ -40,7 +51,7 @@ const Navbar = () => {
               </div>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
-              EV.Portfolio
+              Anshul Nagar
             </span>
           </div>
 

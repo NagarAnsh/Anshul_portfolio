@@ -1,29 +1,44 @@
-import { Mail, Linkedin, Github, Instagram, MapPin, MessageCircle } from 'lucide-react'
+import { Mail, Linkedin, Github, Instagram, MapPin, Phone } from 'lucide-react'
+
+const LINKEDIN_URL = 'https://www.linkedin.com/in/anshulnagar06'
+const GITHUB_URL = 'https://github.com/NagarAnsh'
+const INSTAGRAM_URL = 'https://www.instagram.com/anshulnagar123'
+
+const EMAIL = 'nagaranshul04@gmail.com'
+const PHONE_DISPLAY = '+82 010-7341-2730'
+const PHONE_E164 = '821073412730'
 
 const Contact = () => {
   return (
     <section
       id="contact"
-      className="min-h-screen flex items-center justify-center bg-transparent py-20"
+      className="min-h-screen flex items-center justify-center bg-transparent py-20 px-4"
     >
-      <div className="text-center bg-black/60 backdrop-blur-sm rounded-2xl p-10 border border-cyan-400/20 shadow-xl max-w-2xl mx-auto">
-        {/* Header */}
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-          Let’s Connect
+      <div className="text-center bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-10 border border-cyan-400/20 shadow-xl max-w-2xl mx-auto w-full">
+        <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+          Let's Connect
         </h2>
         <p className="text-gray-300 mb-10 max-w-lg mx-auto">
-          Feel free to reach out for collaborations, research discussions, or creative projects.
+          Open to research collaborations, BMS / battery-AI roles, and conversations about physics-informed ML.
         </p>
 
-        {/* Contact Info */}
         <div className="space-y-3 text-gray-300 mb-10">
           <div className="flex items-center justify-center space-x-3">
             <Mail className="h-5 w-5 text-cyan-400" />
             <a
-              href="mailto:yourname@email.com"
+              href={`mailto:${EMAIL}`}
+              className="hover:text-cyan-400 transition-colors duration-300 break-all"
+            >
+              {EMAIL}
+            </a>
+          </div>
+          <div className="flex items-center justify-center space-x-3">
+            <Phone className="h-5 w-5 text-cyan-400" />
+            <a
+              href={`tel:+${PHONE_E164}`}
               className="hover:text-cyan-400 transition-colors duration-300"
             >
-              yourname@email.com
+              {PHONE_DISPLAY}
             </a>
           </div>
           <div className="flex items-center justify-center space-x-3">
@@ -32,51 +47,42 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Social Icons */}
-        <div className="flex justify-center space-x-8">
+        <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
           <a
-            href="https://www.linkedin.com/in/yourprofile"
+            href={LINKEDIN_URL}
             target="_blank"
             rel="noreferrer"
+            aria-label="LinkedIn"
             className="text-gray-300 hover:text-cyan-400 transition-transform duration-300 hover:scale-110"
           >
             <Linkedin className="h-8 w-8" />
           </a>
           <a
-            href="https://github.com/yourusername"
+            href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
+            aria-label="GitHub"
             className="text-gray-300 hover:text-cyan-400 transition-transform duration-300 hover:scale-110"
           >
             <Github className="h-8 w-8" />
           </a>
           <a
-            href="https://www.instagram.com/yourhandle"
+            href={INSTAGRAM_URL}
             target="_blank"
             rel="noreferrer"
+            aria-label="Instagram"
             className="text-gray-300 hover:text-cyan-400 transition-transform duration-300 hover:scale-110"
           >
             <Instagram className="h-8 w-8" />
           </a>
-          <a
-            href="https://wa.me/yourwhatsapplink"
-            target="_blank"
-            rel="noreferrer"
-            className="text-gray-300 hover:text-cyan-400 transition-transform duration-300 hover:scale-110"
-          >
-            <MessageCircle className="h-8 w-8" />
-          </a>
         </div>
 
-        {/* Optional direct message short link */}
         <div className="mt-10">
           <a
-            href="https://wa.me/yourwhatsapplink" // or Instagram DM / Telegram link
-            target="_blank"
-            rel="noreferrer"
+            href={`mailto:${EMAIL}`}
             className="inline-block mt-2 text-cyan-400 border border-cyan-400 px-6 py-2 rounded-lg font-semibold hover:bg-cyan-400 hover:text-black transition-all duration-300"
           >
-            Send me a quick message →
+            Send me an email →
           </a>
         </div>
       </div>

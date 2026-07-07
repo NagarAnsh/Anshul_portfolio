@@ -1,180 +1,155 @@
-import { useState, useEffect } from 'react'
-import { Battery, Zap, Code, Database, Cpu, Car } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Battery, Brain, Atom, Code } from 'lucide-react'
 
-const BatteryGauge = ({ skill, level, icon: Icon, color }) => {
-  const [currentLevel, setCurrentLevel] = useState(0)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
-        setCurrentLevel(prev => {
-          if (prev >= level) {
-            clearInterval(interval)
-            return level
-          }
-          return prev + 1
-        })
-      }, 20)
-      return () => clearInterval(interval)
-    }, 500)
-
-    return () => clearTimeout(timer)
-  }, [level])
-
-  const getBatteryColor = (lvl) => {
-    if (lvl >= 80) return 'from-green-500 to-green-400'
-    if (lvl >= 60) return 'from-yellow-500 to-yellow-400'
-    if (lvl >= 40) return 'from-orange-500 to-orange-400'
-    return 'from-red-500 to-red-400'
+const categories = [
+  {
+    title: 'Battery Systems',
+    icon: Battery,
+    accent: 'cyan',
+    blurb: 'From cell models to production-style BMS.',
+    skills: [
+      { name: 'Battery Management Systems', core: true },
+      { name: 'SoC / SoH Estimation', core: true },
+      { name: 'Equivalent Circuit Models', core: true },
+      { name: 'EIS / Impedance Analysis' },
+      { name: 'Capacity Fade & Aging' }
+    ]
+  },
+  {
+    title: 'Machine Learning',
+    icon: Brain,
+    accent: 'purple',
+    blurb: 'Physics-constrained models, not black boxes.',
+    skills: [
+      { name: 'Physics-Informed NNs', core: true },
+      { name: 'PyTorch', core: true },
+      { name: 'Neural State Estimation' },
+      { name: 'Time-Series Modeling' }
+    ]
+  },
+  {
+    title: 'Simulation & Chemistry',
+    icon: Atom,
+    accent: 'green',
+    blurb: 'Atomistic insight into what batteries do inside.',
+    skills: [
+      { name: 'Molecular Dynamics (AMS)', core: true },
+      { name: 'ReaxFF / UFF', core: true },
+      { name: 'DFT (Gaussian)' },
+      { name: 'Quantum Chemistry' }
+    ]
+  },
+  {
+    title: 'Programming & Tools',
+    icon: Code,
+    accent: 'yellow',
+    blurb: 'The daily drivers.',
+    skills: [
+      { name: 'Python', core: true },
+      { name: 'MATLAB', core: true },
+      { name: 'LaTeX' },
+      { name: 'Jupyter' },
+      { name: 'Git' },
+      { name: 'React' }
+    ]
   }
+]
+
+const accents = {
+  cyan: {
+    icon: 'text-cyan-400',
+    border: 'hover:border-cyan-400/60',
+    shadow: 'hover:shadow-cyan-500/10',
+    chip: 'bg-cyan-500/15 text-cyan-300 border-cyan-400/40'
+  },
+  purple: {
+    icon: 'text-purple-400',
+    border: 'hover:border-purple-400/60',
+    shadow: 'hover:shadow-purple-500/10',
+    chip: 'bg-purple-500/15 text-purple-300 border-purple-400/40'
+  },
+  green: {
+    icon: 'text-green-400',
+    border: 'hover:border-green-400/60',
+    shadow: 'hover:shadow-green-500/10',
+    chip: 'bg-green-500/15 text-green-300 border-green-400/40'
+  },
+  yellow: {
+    icon: 'text-yellow-400',
+    border: 'hover:border-yellow-400/60',
+    shadow: 'hover:shadow-yellow-500/10',
+    chip: 'bg-yellow-500/15 text-yellow-300 border-yellow-400/40'
+  }
+}
+
+function CategoryCard({ category, index }) {
+  const { icon: Icon } = category
+  const accent = accents[category.accent]
 
   return (
-    <div className="group relative">
-      {/* translucent card so background shows */}
-      <div className="bg-black/50 backdrop-blur-sm border border-gray-700/60 rounded-xl p-6 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/20">
-        {/* Icon and Title */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <Icon className={`h-6 w-6 ${color}`} />
-            <h3 className="text-lg font-semibold text-white">{skill}</h3>
-          </div>
-          <span className="text-2xl font-bold text-cyan-400">{currentLevel}%</span>
-        </div>
-
-        {/* Battery Visual */}
-        <div className="relative">
-          {/* Battery Outline */}
-          <div className="w-full h-8 bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden relative">
-            {/* Battery Fill */}
-            <div
-              className={`h-full bg-gradient-to-r ${getBatteryColor(currentLevel)} transition-all duration-500 ease-out relative`}
-              style={{ width: `${currentLevel}%` }}
-            >
-              {/* Animated Glow Effect */}
-              <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-
-              {/* Charging Animation */}
-              {currentLevel < level && (
-                <div className="absolute right-0 top-0 h-full w-1 bg-white animate-ping"></div>
-              )}
-            </div>
-
-            {/* Battery Segments */}
-            <div className="absolute inset-0 flex">
-              {[...Array(10)].map((_, i) => (
-                <div key={i} className="flex-1 border-r border-gray-700/50 last:border-r-0" />
-              ))}
-            </div>
-          </div>
-
-          {/* Battery Terminal */}
-          <div className="absolute -right-1 top-1 w-2 h-6 bg-gray-600 rounded-r border border-gray-500"></div>
-        </div>
-
-        {/* Status Indicator */}
-        <div className="flex items-center justify-between mt-3 text-sm">
-          <span className="text-gray-400">
-            {currentLevel >= 90 ? '🟢 Expert'
-              : currentLevel >= 70 ? '🟡 Advanced'
-              : currentLevel >= 50 ? '🟠 Intermediate'
-              : '🔴 Learning'}
-          </span>
-          <span className="text-gray-500">
-            {currentLevel < level ? '⚡ Charging...' : '✅ Fully Charged'}
-          </span>
-        </div>
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      className={`group bg-black/50 backdrop-blur-sm border border-gray-700/60 rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${accent.border} ${accent.shadow}`}
+    >
+      <div className="flex items-center gap-3 mb-1.5">
+        <Icon className={`h-7 w-7 ${accent.icon} group-hover:scale-110 transition-transform`} />
+        <h3 className="text-xl font-bold text-white">{category.title}</h3>
       </div>
-    </div>
+      <p className="text-sm text-gray-400 mb-5">{category.blurb}</p>
+
+      <div className="flex flex-wrap gap-2">
+        {category.skills.map(skill => (
+          <span
+            key={skill.name}
+            className={`text-sm px-3 py-1.5 rounded-full border transition-colors duration-300 ${
+              skill.core
+                ? accent.chip
+                : 'bg-white/5 text-gray-300 border-white/10'
+            }`}
+          >
+            {skill.name}
+          </span>
+        ))}
+      </div>
+    </motion.div>
   )
 }
 
 const Skills = () => {
-  const techSkills = [
-    { skill: 'React.js',     level: 90, icon: Code,     color: 'text-cyan-400' },
-    { skill: 'Node.js',      level: 85, icon: Database, color: 'text-green-400' },
-    { skill: 'Python',       level: 80, icon: Cpu,      color: 'text-yellow-400' },
-    { skill: 'JavaScript',   level: 95, icon: Code,     color: 'text-orange-400' },
-    { skill: 'MongoDB',      level: 75, icon: Database, color: 'text-green-500' },
-    { skill: 'TypeScript',   level: 70, icon: Code,     color: 'text-blue-400' }
-  ]
-
-  const evSkills = [
-    { skill: 'Battery Management',  level: 88, icon: Battery, color: 'text-green-400' },
-    { skill: 'EV Charging Systems', level: 82, icon: Zap,     color: 'text-yellow-400' },
-    { skill: 'Energy Storage',      level: 85, icon: Battery, color: 'text-cyan-400' },
-    { skill: 'Vehicle Diagnostics', level: 78, icon: Car,     color: 'text-purple-400' },
-    { skill: 'Power Electronics',   level: 80, icon: Cpu,     color: 'text-red-400' },
-    { skill: 'Grid Integration',    level: 75, icon: Zap,     color: 'text-blue-400' }
-  ]
-
   return (
-    // MADE TRANSPARENT: removed bg-gradient-to-br from-gray-900 via-black to-gray-900
     <section id="skills" className="min-h-screen py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+        <div className="text-center mb-14">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
-              Power & Skills
+              Skills & Toolbox
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            My technical expertise spans both software development and EV technology.
-            Each skill is charged and ready to power your next project.
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Four years across chemistry, simulation, and machine learning — everything in service of
+            understanding how batteries age, and predicting it.
           </p>
-
-          {/* Overall System Status */}
-          <div className="mt-8 inline-flex items-center space-x-4 bg-black/50 backdrop-blur-sm border border-cyan-400/30 rounded-full px-6 py-3">
-            <Battery className="h-5 w-5 text-green-400" />
-            <span className="text-green-400 font-semibold">System: Fully Operational</span>
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          </div>
         </div>
 
-        {/* Technical Skills */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-cyan-400 mb-8 flex items-center">
-            <Code className="h-6 w-6 mr-3" />
-            Technical Skills
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {techSkills.map((skill, index) => (
-              <BatteryGauge key={index} {...skill} />
-            ))}
-          </div>
-        </div>
-
-        {/* EV & Energy Skills */}
-        <div>
-          <h3 className="text-2xl font-bold text-green-400 mb-8 flex items-center">
-            <Zap className="h-6 w-6 mr-3" />
-            EV & Energy Systems
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {evSkills.map((skill, index) => (
-              <BatteryGauge key={index} {...skill} />
-            ))}
-          </div>
-        </div>
-
-        {/* Performance Stats */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            { label: 'Projects Completed', value: '25+', icon: '🚀' },
-            { label: 'Years Experience',   value: '3+',  icon: '⚡' },
-            { label: 'Happy Clients',      value: '15+', icon: '😊' },
-            { label: 'Code Commits',       value: '1000+', icon: '💻' }
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className="text-center bg-black/50 backdrop-blur-sm border border-gray-700/60 rounded-xl p-6 hover:border-cyan-400/50 transition-all duration-300"
-            >
-              <div className="text-3xl mb-2">{stat.icon}</div>
-              <div className="text-2xl font-bold text-cyan-400">{stat.value}</div>
-              <div className="text-gray-300 text-sm">{stat.label}</div>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {categories.map((category, i) => (
+            <CategoryCard key={category.title} category={category} index={i} />
           ))}
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center text-sm text-gray-500 mt-10"
+        >
+          Highlighted chips are the tools I work with every day.
+        </motion.p>
       </div>
     </section>
   )
