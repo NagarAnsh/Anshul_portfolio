@@ -39,6 +39,12 @@ const photos = [
     category: 'On Stage',
     title: 'Poster session · Power Electronics 2024',
     blurb: 'Sharing my hybrid current-profile model at the Annual Conference in Korea.'
+  },
+  {
+    src: '/gallery/life-7.jpg',
+    category: 'On Stage',
+    title: 'Best Paper poster · ICEMS 2025',
+    blurb: 'Walking a colleague through the physics-constrained neural network that won Best Paper in Busan.'
   }
 ]
 
