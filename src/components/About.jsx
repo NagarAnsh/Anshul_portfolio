@@ -1,8 +1,8 @@
-import { useRef } from 'react'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from 'framer-motion'
 import {
   MapPin, Calendar, Award, Zap, Battery, Car,
-  GraduationCap, Atom, Brain, Trophy, Sparkles
+  GraduationCap, Atom, Brain, Trophy, Sparkles, X, ZoomIn
 } from 'lucide-react'
 
 const milestones = [
@@ -175,6 +175,20 @@ function ChargeTimeline() {
 }
 
 function Achievements() {
+  const [lightbox, setLightbox] = useState(null)
+
+  // close on Esc + lock page scroll while open
+  useEffect(() => {
+    if (!lightbox) return
+    const onKey = e => e.key === 'Escape' && setLightbox(null)
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [lightbox])
+
   return (
     <div>
       <h3 className="text-2xl sm:text-3xl font-bold text-center mb-10">
@@ -211,7 +225,12 @@ function Achievements() {
             transition={{ duration: 0.45, delay: i * 0.1 }}
             className="group bg-black/50 backdrop-blur-sm border border-amber-400/25 rounded-2xl overflow-hidden hover:border-amber-400/60 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300"
           >
-            <div className="relative h-44 overflow-hidden bg-white/5">
+            <button
+              type="button"
+              onClick={() => setLightbox(a)}
+              className="relative h-44 w-full overflow-hidden bg-white/5 block cursor-zoom-in text-left"
+              aria-label={`View ${a.title} certificate`}
+            >
               <img
                 src={a.img}
                 alt={a.title}
@@ -220,7 +239,10 @@ function Achievements() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <Trophy className="absolute top-3 right-3 h-6 w-6 text-amber-400 drop-shadow" />
-            </div>
+              <span className="absolute bottom-2 right-2 flex items-center gap-1 text-[10px] text-white/80 bg-black/50 rounded-full px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <ZoomIn className="h-3 w-3" /> view
+              </span>
+            </button>
             <div className="p-4">
               <h4 className="font-bold text-white text-sm mb-0.5">{a.title}</h4>
               <p className="text-amber-300/90 text-xs mb-2">{a.sub}</p>
@@ -266,6 +288,47 @@ function Achievements() {
           </div>
         </div>
       </motion.div>
+
+      {/* certificate lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-10 cursor-zoom-out"
+            onClick={() => setLightbox(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setLightbox(null)}
+              className="absolute top-4 right-4 text-gray-300 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <motion.div
+              initial={{ scale: 0.92, y: 12 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 8 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="max-w-4xl w-full cursor-default"
+              onClick={e => e.stopPropagation()}
+            >
+              <img
+                src={lightbox.img}
+                alt={lightbox.title}
+                className="w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
+              />
+              <div className="text-center mt-4">
+                <h4 className="text-white font-bold">{lightbox.title}</h4>
+                <p className="text-amber-300/90 text-sm">{lightbox.sub}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -312,14 +375,19 @@ const About = () => {
 
           <div className="lg:col-span-2 bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8">
             <p className="text-gray-200 leading-relaxed mb-4">
-              I am a PhD researcher in Electrical Engineering at Chungnam National University, working at
-              the intersection of <span className="text-cyan-400 font-semibold">battery science</span> and
-              <span className="text-purple-400 font-semibold"> machine learning</span>.
+              I started as a chemist. Five years at IISER Mohali taught me to think in molecules, and a
+              research year at IIT Delhi introduced me to the one problem I couldn't let go of — the{' '}
+              <span className="text-amber-400 font-semibold">SEI layer</span>, the fragile skin inside every
+              lithium-ion cell that quietly decides how long it lives.
             </p>
             <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
-              My work spans quantum chemistry, molecular dynamics of SEI components, equivalent-circuit
-              modeling for LFP cells, and Physics-Informed Neural Networks for capacity fade prediction.
-              Scroll the charge curve below to trace the journey.
+              That question — <em className="text-gray-200">why do batteries age, and can we see it coming?</em> —
+              pulled me to South Korea. At CNU I built SoC / SoH algorithms for{' '}
+              <span className="text-cyan-400 font-semibold">Hyundai's LFP packs</span>; now my PhD is about
+              teaching neural networks to obey electrochemistry —{' '}
+              <span className="text-purple-400 font-semibold">physics-informed models</span> that predict
+              capacity fade from minimal data. Batteries whose ageing we can predict are batteries we can
+              trust — that's the whole mission. Scroll the charge curve below to trace the journey.
             </p>
             <div className="grid grid-cols-3 gap-3 mt-6">
               <div className="text-center bg-black/30 rounded-lg p-3">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Zap, Battery } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -43,14 +43,34 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <Battery className="h-8 w-8 text-cyan-400" />
-              <div className="absolute inset-0 h-8 w-8 text-cyan-400 animate-pulse">
-                <Zap className="h-4 w-4 absolute top-1 left-1" />
-              </div>
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+          <div className="flex items-center gap-2.5">
+            <svg
+              viewBox="0 0 44 44"
+              className="h-9 w-9 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="navLogoG" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="100%" stopColor="#4ade80" />
+                </linearGradient>
+              </defs>
+              {/* badge */}
+              <rect x="2" y="2" width="40" height="40" rx="13" fill="#0b1220" stroke="url(#navLogoG)" strokeWidth="2" />
+              {/* charge pips */}
+              <rect x="11" y="33" width="6" height="3" rx="1.5" fill="url(#navLogoG)" opacity="0.9" />
+              <rect x="19" y="33" width="6" height="3" rx="1.5" fill="url(#navLogoG)" opacity="0.55" />
+              <rect x="27" y="33" width="6" height="3" rx="1.5" fill="url(#navLogoG)" opacity="0.25" />
+              {/* bolt */}
+              <path
+                d="M 25.5 7 L 14.5 22.5 L 21 22.5 L 18.5 31.5 L 29.5 16.5 L 23 16.5 Z"
+                fill="url(#navLogoG)"
+                stroke="#0b1220"
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
               Anshul Nagar
             </span>
           </div>
